@@ -9,5 +9,5 @@ const thingSchema = mongoose.Schema({
     imageUrl: { type: String, required: true },
     heat: { type: Number, required: true },
 });
-
-module.exports = mongoose.model('Thing', thingSchema);
+ 
+module.exports = mongoose.model('Thing', thingSchema); 

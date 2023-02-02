@@ -58,7 +58,7 @@ exports.modifyThing = (req, res, next) => {
             res.status(400).json({ error });
         });
 };
-
+ 
 
 //Supprimer une sauce
 exports.deleteThing = (req, res, next) => {
