@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
 const express = require('express');
+const mongoose = require('mongoose');
 const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 const path = require('path');
+const app = express();
 
-mongoose.connect('mongodb+srv://CharonTom:Skyzotek84@cluster0.zim1zov.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://CharonTom:mdp123@cluster0.9paobao.mongodb.net/?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -12,7 +13,6 @@ mongoose.connect('mongodb+srv://CharonTom:Skyzotek84@cluster0.zim1zov.mongodb.ne
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-const app = express();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,8 +24,8 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.use('/api/auth', userRoutes);
-app.use('/api/sauces', saucesRoutes);
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/api/sauces', saucesRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
