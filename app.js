@@ -4,6 +4,7 @@ const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 const path = require('path');
 const app = express();
+const helmet = require("helmet");
 
 mongoose.connect('mongodb+srv://CharonTom:mdp123@cluster0.9paobao.mongodb.net/?retryWrites=true&w=majority',
     {
@@ -23,6 +24,9 @@ app.use((req, res, next) => {
 
 
 app.use(express.json());
+
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', saucesRoutes);
