@@ -5,8 +5,11 @@ const userRoutes = require('./routes/user');
 const path = require('path');
 const app = express();
 const helmet = require("helmet");
+const dotenv = require("dotenv").config();
+const mongoSanitize = require('express-mongo-sanitize');
 
-mongoose.connect('mongodb+srv://CharonTom:mdp123@cluster0.9paobao.mongodb.net/?retryWrites=true&w=majority',
+
+mongoose.connect(process.env.MONGO_SRV,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -27,7 +30,7 @@ app.use(express.json());
 
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
-
+app.use(mongoSanitize());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
