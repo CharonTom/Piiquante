@@ -1,6 +1,6 @@
 const http = require('http');
 const app = require('./app');
-
+const mongoose = require('mongoose');
 const normalizePort = val => {
   const port = parseInt(val, 10);
 
@@ -12,7 +12,7 @@ const normalizePort = val => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 const errorHandler = error => {
@@ -44,4 +44,16 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-server.listen(port);
+mongoose.connect(process.env.MONGO_SRV,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    server.listen(port);
+    console.log('Connexion à MongoDB réussie !');
+  })
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+
+
