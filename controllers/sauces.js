@@ -2,7 +2,7 @@ const Sauce = require('../models/Sauces');
 const fs = require('fs');
 
 
-// Ajouter une sauce
+// ajouter une sauce
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
@@ -17,7 +17,7 @@ exports.createSauce = (req, res, next) => {
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
 
-    sauce.save()
+    sauce.save()  // enregistrement de l'objet dans la db
         .then(() => { res.status(201).json({ message: 'Objet enregistré !' }) })
         .catch(error => { res.status(400).json({ error }) })
 };
@@ -25,10 +25,10 @@ exports.createSauce = (req, res, next) => {
 
 // modifier une sauce
 exports.modifyThing = (req, res, next) => {
-    const sauceObject = req.file ? {
-        ...JSON.parse(req.body.sauce),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    } : { ...req.body };
+    const sauceObject = req.file ? {  // Si il y a une image on traite l'image et la requête
+        ...JSON.parse(req.body.sauce), 
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
+    } : { ...req.body }; // sinon on traite juste l'objet entrant
 
     delete sauceObject._userId;
     Sauce.findOne({ _id: req.params.id })
@@ -52,12 +52,12 @@ exports.modifyThing = (req, res, next) => {
 exports.deleteThing = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
-            if (sauce.userId != req.auth.userId) {
+            if (sauce.userId != req.auth.userId) { 
                 res.status(401).json({ message: 'Not authorized' });
             } else {
                 const filename = sauce.imageUrl.split('/images/')[1];
-                fs.unlink(`images/${filename}`, () => {
-                    Sauce.deleteOne({ _id: req.params.id })
+                fs.unlink(`images/${filename}`, () => {       // Supression de l'image dans le disque
+                    Sauce.deleteOne({ _id: req.params.id })   // Supression de l'objet dans la db
                         .then(() => { res.status(200).json({ message: 'Objet supprimé !' }) })
                         .catch(error => res.status(401).json({ error }));
                 });
@@ -69,7 +69,7 @@ exports.deleteThing = (req, res, next) => {
 };
 
 
-// Lire tout les sauces
+// lire tout les sauces
 exports.getAllSauces = (req, res, next) => {
     Sauce.find().then(
         (sauces) => {

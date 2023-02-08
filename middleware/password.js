@@ -1,6 +1,7 @@
+// import du model passwordSchema
 const passwordSchema = require("../models/password");
 
-//checking user password is ok with our password model.
+// On regarde si le mdp de l'utilisateur match avec notre passwordSchema
 module.exports = (req, res, next) => {
   if (!passwordSchema.validate(req.body.password)) {
     res.writeHead(

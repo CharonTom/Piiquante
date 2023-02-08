@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+
+//import
 const passwordCheck = require("../middleware/password");
 const userCtrl = require('../controllers/user');
 const rateLimit = require('express-rate-limit');
@@ -9,7 +11,7 @@ const passLimiter = rateLimit({
     max: 3 // essais max par adresse ip
 });
 
-
+// Route du sign up et login
 router.post('/signup', passwordCheck, userCtrl.signup);
 router.post('/login', passLimiter, userCtrl.login);
 

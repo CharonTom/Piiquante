@@ -1,24 +1,24 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const emailValidator = require('email-validator');
+const User = require('../models/user');
+const validator = require('email-validator');
 
 
 exports.signup = (req, res, next) => {
-    const isValidateEmail = emailValidator.validate(req.body.email);
+    const isValidateEmail = validator.validate(req.body.email); // Verification du format de l'email
     if (!isValidateEmail) {
         res.writeHead(400, 'Email incorrect !', {
             "content-type": "application/json",
         });
         res.end("Le format de l'email est incorrect.");
     } else {
-        bcrypt.hash(req.body.password, 10)
+        bcrypt.hash(req.body.password, 10)           // hashage du mdp
             .then(hash => {
                 const user = new User({
                     email: req.body.email,
                     password: hash
                 });
-                user.save()
+                user.save()     // Ajout de l'utilsateur dans la db
                     .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
                     .catch(error => res.status(400).json({ error }));
             })
@@ -26,13 +26,14 @@ exports.signup = (req, res, next) => {
     }
 };
 
+
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ email: req.body.email }) // recherche l'email dans db
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' });
             }
-            bcrypt.compare(req.body.password, user.password)
+            bcrypt.compare(req.body.password, user.password) // on compare le mdp de la req et le mdp de la db
                 .then(valid => {
                     if (!valid) {
                         return res.status(401).json({ error: 'Mot de passe incorrect !' });

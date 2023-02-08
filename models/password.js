@@ -11,7 +11,4 @@ passwordSchema
     .has().digits()                                // Must have at least 1 digit
     .has().not().symbols();
 
-/*console.log("---->CONTENU passwordSchema");
-console.log(passwordSchema);*/
-
 module.exports = passwordSchema;
