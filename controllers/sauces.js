@@ -24,7 +24,7 @@ exports.createSauce = (req, res, next) => {
 
 
 // modifier une sauce
-exports.modifyThing = (req, res, next) => {
+exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ? {  // Si il y a une image on traite l'image et la requête
         ...JSON.parse(req.body.sauce), 
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
@@ -49,7 +49,7 @@ exports.modifyThing = (req, res, next) => {
 
 
 //Supprimer une sauce
-exports.deleteThing = (req, res, next) => {
+exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             if (sauce.userId != req.auth.userId) { 
@@ -85,7 +85,7 @@ exports.getAllSauces = (req, res, next) => {
 };
 
 // Lire une sauce
-exports.getOneThing = (req, res, next) => {
+exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({
         _id: req.params.id
     }).then(

@@ -8,7 +8,7 @@ const rateLimit = require('express-rate-limit');
 
 const passLimiter = rateLimit({
     windowMs: 2 * 60 * 1000, // Temps défini (en minutes) pour tester l'application
-    max: 3 // essais max par adresse ip
+    max: 10 // essais max par adresse ip
 });
 
 // Route du sign up et login
