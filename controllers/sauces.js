@@ -6,7 +6,6 @@ const fs = require('fs');
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
-    delete sauceObject._userId;
     const sauce = new Sauce({
         ...sauceObject,
         likes: 0,
@@ -18,7 +17,7 @@ exports.createSauce = (req, res, next) => {
     });
 
     sauce.save()  // enregistrement de l'objet dans la db
-        .then(() => { res.status(201).json({ message: 'Objet enregistré !' }) })
+        .then(() => { res.status(201).json({ message: 'Sauce enregistrée !' }) })
         .catch(error => { res.status(400).json({ error }) })
 };
 
@@ -30,14 +29,13 @@ exports.modifySauce = (req, res, next) => {
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` 
     } : { ...req.body }; // sinon on traite juste l'objet entrant
 
-    delete sauceObject._userId;
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
             if (sauce.userId != req.auth.userId) {
                 res.status(401).json({ message: 'Not authorized' });
             } else {
                 Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Objet modifié!' }))
+                    .then(() => res.status(200).json({ message: 'Sauce modifiée!' }))
                     .catch(error => res.status(401).json({ error }));
             }
         })
@@ -58,7 +56,7 @@ exports.deleteSauce = (req, res, next) => {
                 const filename = sauce.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {       // Supression de l'image dans le disque
                     Sauce.deleteOne({ _id: req.params.id })   // Supression de l'objet dans la db
-                        .then(() => { res.status(200).json({ message: 'Objet supprimé !' }) })
+                        .then(() => { res.status(200).json({ message: 'Sauce supprimée !' }) })
                         .catch(error => res.status(401).json({ error }));
                 });
             }
@@ -106,8 +104,7 @@ exports.useLike = (req, res, next) => {
     const userId = req.body.userId; // récupération du userID par la requête
     const like = req.body.like;    // récupération du like par la requête
     
-    // User liked the Sauce
-    // Pushing user id in usersLikes array and incrementing likes by 1
+    // L'utilisateur like la sauce
     if (like === 1) {
         Sauce.updateOne(
             { _id: sauceId },
@@ -116,12 +113,11 @@ exports.useLike = (req, res, next) => {
                 $push: { usersLiked: userId },
             }
         )
-            .then((sauce) => res.status(200).json({ message: "Sauce liké !" }))
+            .then((sauce) => res.status(200).json({ message: "Sauce likée !" }))
             .catch((error) => res.status(400).json({ error }));
     }
 
-    // If user disliked the Sauce
-    // Pushing user id in usersDislikes array and dicrementing likes by 1
+    // Si l'utilisateur dislike
     else if (like === -1) {
         Sauce.updateOne(
             { _id: sauceId },
@@ -131,15 +127,12 @@ exports.useLike = (req, res, next) => {
             }
         )
             .then((sauce) =>
-                res.status(200).json({ message: "Sauce disliké !" })
+                res.status(200).json({ message: "Sauce dislikée !" })
             )
             .catch((error) => res.status(400).json({ error }));
     }
 
-    // If user erased its opinion
-    // Depending on if the urser likes or disliked the sauce beafore canceling its opinion :
-    // Finding and erasing user id in usersLikes or userDislikes array
-    // Decremanting likes or dislikes by one
+    // Si l'utilisateur retourne sur sa décision
     else {
         Sauce.findOne({ _id: sauceId })
             .then((sauce) => {
