@@ -3,14 +3,10 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const validator = require('email-validator');
 
-
 exports.signup = (req, res, next) => {
     const isValidateEmail = validator.validate(req.body.email); // Verification du format de l'email
     if (!isValidateEmail) {
-        res.writeHead(400, "Le format de l'email est incorrect.", {
-            "content-type": "application/json",
-        });
-        res.end("Le format de l'email est incorrect.");
+        res.status(400).json({ error: 'Le format de l\'email est incorrecte' });
     } else {
         bcrypt.hash(req.body.password, 10)           // hashage du mdp
             .then(hash => {
@@ -26,9 +22,8 @@ exports.signup = (req, res, next) => {
     }
 };
 
-
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email }) // recherche l'email dans db
+    User.findOne({ email: req.body.email }) // recherche l'email dans la db
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !' });
