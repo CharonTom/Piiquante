@@ -1,6 +1,7 @@
 const http = require('http');
 const app = require('./app');
 const mongoose = require('mongoose');
+mongoose.set('strictQuery', true);
 
 // renvoie un port valide, qu'il soit fourni sous la forme d'un numéro ou d'une chaîne
 const normalizePort = val => {

@@ -23,6 +23,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
+   
     User.findOne({ email: req.body.email }) // recherche l'email dans la db
         .then(user => {
             if (!user) {
