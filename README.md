@@ -1,5 +1,9 @@
 # Projet 6 : Piiquante
 
+![Page login](https://github.com/CharonTom/Piiquante/blob/main/images/accueil.jpg)
+![page main](https://github.com/CharonTom/Piiquante/blob/main/images/main.jpg)
+![Page produit](https://github.com/CharonTom/Piiquante/blob/main/images/modif.jpg)
+
 ### Ceci est mon sixième projet de ma formation OpenClassRooms.
 
 ## J'ai construt une API sécurisée pour une application d'avis gastronomiques
