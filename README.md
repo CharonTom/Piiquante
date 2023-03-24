@@ -8,6 +8,8 @@
 
 ## J'ai construt une API sécurisée pour une application d'avis gastronomiques
 
+Les sauces piquantes sont de plus en plus populaires, en grande partie grâce à la série YouTube « Hot Ones » . C’est pourquoi ce nouveau client, la marque de condiments à base de piment Piiquante, veut développer une application web de critique des sauces piquantes appelée « Hot Takes » .
+
 ### Technologies utilisées:
 
 - Node.js
@@ -17,6 +19,8 @@
 ### Base de données
 
 - MongoDB Atlas
+
+---
 
 ### Installation
 
