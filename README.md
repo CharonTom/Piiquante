@@ -1,6 +1,6 @@
 # Projet 6 : Piiquante
 
-![Page login](https://github.com/CharonTom/Piiquante/blob/main/images/accueil.jpg)
+![Présentation sur pc et mobile](https://github.com/CharonTom/my-website/blob/main/src/images/piiquante.png)
 ![page main](https://github.com/CharonTom/Piiquante/blob/main/images/main.jpg)
 ![Page produit](https://github.com/CharonTom/Piiquante/blob/main/images/modif.jpg)
 
