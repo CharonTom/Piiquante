@@ -4,13 +4,14 @@
 
 ### Ceci est mon sixième projet de ma formation OpenClassRooms.
 
+
 ## J'ai construit une API sécurisée pour une application d'avis gastronomiques
 
 Hot Takes est une application web d'avis critiques spécialisé dans les sauces. Le but était de construire une API REST sécurisée qui respecte les règles de l'OWASP. L'application permet aux utilisateurs de poster et modifier des sauces avec également une fonction like et dislike.
 
 
-![Présentation sur pc et mobile](https://github.com/CharonTom/my-website/blob/main/src/images/piiquante.png)
 
+![Présentation sur pc et mobile](https://github.com/CharonTom/my-website/blob/main/src/images/piiquante.png)
 ![Page produit](https://github.com/CharonTom/Piiquante/blob/main/images/modif.jpg)
 
 ### Exigences de sécurité
