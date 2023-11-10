@@ -39,8 +39,6 @@ correspond pas, renvoyer « 403: unauthorized request. » Cela permet de s'assur
 que seul le propriétaire de la sauce peut apporter des modifications à celle-ci.
 
 
-
-
 ### Technologies utilisées:
 
 - Node.js
@@ -61,8 +59,8 @@ Frontend :
 
 Dans ce projet le frontend était fourni.
 
-- Lancer le Front avec 'ng serve'
-- Puis vous rendre sur http://localhost:4200/
+- Lancer le Front en installant les dépendances avec "npm i", puis "npm start" pour démarrer le serveur.
+- Vous rendre sur http://localhost:4200/
 
 Backend :
 
@@ -70,4 +68,4 @@ Dans le dossier back il faut :
 
 - Créer un fichier .env (le compléter comme sur l'exemple de .env.example)
 - Créer un dossier "images"
-- Lancer le Back avec 'nodemon server'
+- Lancer le Back avec 'node server.js'
